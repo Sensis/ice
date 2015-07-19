@@ -377,6 +377,8 @@ class DashboardController {
 
     def detail = {}
 
+    def project = {}
+
     def reservation = {}
 
     def breakdown = {}
@@ -403,7 +405,9 @@ class DashboardController {
         List<Product> products = getConfig().productService.getProducts(listParams(query, "product"));
         List<Operation> operations = Operation.getOperations(listParams(query, "operation"));
         List<UsageType> usageTypes = UsageType.getUsageTypes(listParams(query, "usageType"));
-        List<ResourceGroup> resourceGroups = ResourceGroup.getResourceGroups(listParams(query, "resourceGroup"));
+        List<ResourceGroup> resourceGroups = ResourceGroup.searchResourceGroups(listParams(query, "project"));
+        if(resourceGroups.isEmpty())
+            resourceGroups = ResourceGroup.getResourceGroups(listParams(query, "resourceGroup"));
         DateTime end = query.has("spans") ? dayFormatter.parseDateTime(query.getString("end")) : dateFormatter.parseDateTime(query.getString("end"));
         ConsolidateType consolidateType = ConsolidateType.valueOf(query.getString("consolidate"));
         ApplicationGroup appgroup = query.has("appgroup") ? new ApplicationGroup(query.getString("appgroup")) : null;

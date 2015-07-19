@@ -458,6 +458,9 @@ ice.factory('usage_db', function($window, $http, $filter) {
           else if (params[i].indexOf("resourceGroup=") === 0) {
             $scope.selected__resourceGroups = params[i].substr(14).split(",");
           }
+          else if (params[i].indexOf("project=") === 0) {
+            $scope.project = params[i].substr(8);
+          }
         }
       }
       if (!$scope.showResourceGroups) {
@@ -622,6 +625,9 @@ ice.factory('usage_db', function($window, $http, $filter) {
           this.addParams(params, "resourceGroup", $scope.resourceGroups, $scope.selected_resourceGroups);
           params.showResourceGroups = true;
         }
+        if($scope.project) {
+          params.project = $scope.project;
+        }
       }
       $http({
         method: "POST",
@@ -652,6 +658,9 @@ ice.factory('usage_db', function($window, $http, $filter) {
         if ($scope.showResourceGroups) {
           this.addParams(params, "resourceGroup", $scope.resourceGroups, $scope.selected_resourceGroups);
           params.showResourceGroups = true;
+        }
+        if($scope.project) {
+          params.project = $scope.project;
         }
       }
       $http({
@@ -698,6 +707,9 @@ ice.factory('usage_db', function($window, $http, $filter) {
       if ($scope.showResourceGroups && !params.breakdown) {
         params.showResourceGroups = true;
         this.addParams(params, "resourceGroup", $scope.resourceGroups, $scope.selected_resourceGroups, $scope.selected__resourceGroups, $scope.filter_resourceGroups);
+      }
+      if($scope.project) {
+        params.project = $scope.project;
       }
       if ($scope.appgroup) {
         params.appgroup = $scope.appgroup;
@@ -1004,6 +1016,7 @@ function detailCtrl($scope, $location, $http, usage_db, highchart) {
   $scope.showsps = false;
   $scope.factorsps = false;
   $scope.showResourceGroups = false;
+  $scope.project = "";
   $scope.plotType = "area";
   $scope.legends = [];
   $scope.usage_cost = "cost";
@@ -1016,8 +1029,8 @@ function detailCtrl($scope, $location, $http, usage_db, highchart) {
     {name: "Operation"},
     {name: "UsageType"}
   ],
-  $scope.groupBy = $scope.groupBys[2];
-  $scope.consolidate = "hourly";
+  $scope.groupBy = $scope.groupBys[1];
+  $scope.consolidate = "monthly";
   $scope.end = new Date();
   $scope.start = new Date();
   var startMonth = $scope.end.getUTCMonth() - 1;
@@ -1078,6 +1091,7 @@ function detailCtrl($scope, $location, $http, usage_db, highchart) {
       $scope.legendName = $scope.groupBy.name;
       $scope.legend_usage_cost = $scope.usage_cost;
     });
+    $scope.order(legends, 'total', true);
   }
 
   $scope.accountsChanged = function() {
@@ -1298,6 +1312,7 @@ function appgroupCtrl($scope, $location, $http, usage_db, highchart) {
       if (result2.status === 200 && result2.data) {
         $scope.appgroup = result2.data;
         $scope.selected_resourceGroups = [];
+        $scope.project = "";
         var selected = [];
         for (var key in $scope.appgroup.data) {
           for (var i in $scope.appgroup.data[key]) {
