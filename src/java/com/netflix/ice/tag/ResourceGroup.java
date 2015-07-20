@@ -17,11 +17,11 @@
  */
 package com.netflix.ice.tag;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-
 import java.util.List;
 import java.util.concurrent.ConcurrentMap;
+
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 
 public class ResourceGroup extends Tag {
     private ResourceGroup (String name) {
@@ -46,6 +46,21 @@ public class ResourceGroup extends Tag {
                 if (resourceGroup != null)
                     result.add(resourceGroup);
             }
+        }
+        return result;
+    }
+
+    public static List<ResourceGroup> searchResourceGroups(List<String> names) {
+        List<ResourceGroup> result = Lists.newArrayList();
+        if (names != null) {
+            for (String name: names) {
+                for(String key: resourceGroups.keySet()) {
+                    if (key.toLowerCase().contains(name.toLowerCase())) {
+                        result.add(resourceGroups.get(key));
+                    }
+                }
+            }
+
         }
         return result;
     }

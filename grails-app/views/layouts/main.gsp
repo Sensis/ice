@@ -67,6 +67,9 @@
         <li class="menuButton"><a class="" href="${resource(dir: 'dashboard', file: 'editappgroup')}" ng-click="reload()">Create New Application Group</a></li>
       </ul>
     </li>
+    <li class="menuButton">
+      <a class="" href="${resource(dir: 'dashboard', file: 'project')}#showResourceGroups=true&{{getTimeParams()}}" ng-click="reload()">Project Summary</a>
+    </li>
     </g:if>
   </ul>
   <div class="clear"></div>
