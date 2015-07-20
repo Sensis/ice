@@ -1188,7 +1188,7 @@ function detailCtrl($scope, $location, $http, usage_db, highchart) {
     method: 'GET',
     url: '/ice/resources.json'
   }).success(function(result) {
-    $scope.resourceList = result.data;
+    $scope.resourceList = result;
   });
 }
 
