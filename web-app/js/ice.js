@@ -1030,6 +1030,7 @@ function detailCtrl($scope, $location, $http, usage_db, highchart) {
     {name: "UsageType"}
   ],
   $scope.groupBy = $scope.groupBys[1];
+  $scope.resourceList = [];
   $scope.consolidate = "monthly";
   $scope.end = new Date();
   $scope.start = new Date();
@@ -1090,8 +1091,8 @@ function detailCtrl($scope, $location, $http, usage_db, highchart) {
 
       $scope.legendName = $scope.groupBy.name;
       $scope.legend_usage_cost = $scope.usage_cost;
+      $scope.order($scope.legends, 'total', true);
     });
-    $scope.order(legends, 'total', true);
   }
 
   $scope.accountsChanged = function() {
@@ -1182,6 +1183,13 @@ function detailCtrl($scope, $location, $http, usage_db, highchart) {
   }
   else
     fn();
+
+  $http({
+    method: 'GET',
+    url: '/ice/resources.json'
+  }).success(function(result) {
+    $scope.resourceList = result.data;
+  });
 }
 
 function appgroupCtrl($scope, $location, $http, usage_db, highchart) {

@@ -66,47 +66,9 @@
         </div>
       </td>
       <td>
-        <input class="required" type="text" name="project" id="project" size="100" ng-model="project" ng-keyup="if(event.keyCode) === 13 {updateUrl(); getData();}"/>
-        <select ng-model="project">
-          <option value="ALFRESCO">ALFRESCO</option>
-          <option value="AWSEB">AWSEB</option>
-          <option value="BASE">BASE</option>
-          <option value="BO,BUSINESSOBJECT">BO,BUSINESSOBJECT</option>
-          <option value="CATCHER">CATCHER</option>
-          <option value="CLOUDFRONT">CLOUDFRONT</option>
-          <option value="CLOUDWATCH">CLOUDWATCH</option>
-          <option value="CONNECT">CONNECT</option>
-          <option value="CONTENT">CONTENT</option>
-          <option value="CORPSITES">CORPSITES</option>
-          <option value="DEVOPS">DEVOPS</option>
-          <option value="EBS">EBS</option>
-          <option value="EC2">EC2</option>
-          <option value="ECOMMERCE,SITESMART">ECOMMERCE,SITESMART</option>
-          <option value="EIP">EIP</option>
-          <option value="ELASTICACHE">ELASTICACHE</option>
-          <option value="EMS">EMS</option>
-          <option value="ETS">ETS</option>
-          <option value="FINDABILITY">FINDABILITY</option>
-          <option value="GLACIER">GLACIER</option>
-          <option value="MARSHALL">MARSHALL</option>
-          <option value="PITCHER">PITCHER</option>
-          <option value="RDS">RDS</option>
-          <option value="ROUTE53">ROUTE53</option>
-          <option value="S3">S3</option>
-          <option value="SALES-TOOLS">SALES-TOOLS</option>
-          <option value="SAPI">SAPI</option>
-          <option value="SAS">SAS</option>
-          <option value="SDFCC,CUSTOMERCENTRE">SDFCC,CUSTOMERCENTRE</option>
-          <option value="SDFCONTENT">SDFCONTENT</option>
-          <option value="SDFORP">SDFORP</option>
-          <option value="SHARED">SHARED</option>
-          <option value="SPLUNK">SPLUNK</option>
-          <option value="SSAPI">SSAPI</option>
-          <option value="STORAGE">STORAGE</option>
-          <option value="VCAC">VCAC</option>
-          <option value="WP">WP</option>
-          <option value="YELLOW">YELLOW</option>
-          <option value="YOUTUBE">YOUTUBE</option>
+        <input class="required" type="text" name="project" id="project" size="100" ng-model="project"/>
+        <select ng-model="project" ng-options="item.id as item.name for item in resourceList">
+          <option value="">Pre-canned Searches</option>
         </select>
       </td>
   </table>
