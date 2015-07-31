@@ -19,7 +19,11 @@ package com.netflix.ice.tag;
 
 import java.util.List;
 import java.util.concurrent.ConcurrentMap;
-
+import java.util.regex.Pattern;
+ 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+ 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
@@ -28,7 +32,8 @@ public class ResourceGroup extends Tag {
         super(name);
     }
     private static ConcurrentMap<String, ResourceGroup> resourceGroups = Maps.newConcurrentMap();
-
+    private final static Logger logger = LoggerFactory.getLogger(ResourceGroup.class);
+ 
     public static ResourceGroup getResourceGroup(String name) {
         ResourceGroup resourceGroup = resourceGroups.get(name);
         if (resourceGroup == null) {
@@ -54,8 +59,10 @@ public class ResourceGroup extends Tag {
         List<ResourceGroup> result = Lists.newArrayList();
         if (names != null) {
             for (String name: names) {
+                Pattern p = Pattern.compile(name, Pattern.CASE_INSENSITIVE);
                 for(String key: resourceGroups.keySet()) {
-                    if (key.toLowerCase().contains(name.toLowerCase())) {
+                    // logger.info("Matching |" + key + "|.|" + name + "|");
+                    if (p.matcher(key).find()) {
                         result.add(resourceGroups.get(key));
                     }
                 }
